@@ -1,0 +1,32 @@
+.max-w-3xl.mx-auto.p-6.space-y-8
+  .border-b.pb-4
+    h1.text-3xl.font-bold.text-gray-900 = @project.name
+    .mt-2.flex.items-center.gap-4
+      span.text-gray-600 Current status:
+      span.px-3.py-1.bg-gray-100.rounded-full.text-sm = @project.status.humanize
+      = link_to 'Back to Projects', projects_path, class: 'text-blue-600 hover:text-blue-800 ml-auto'
+
+  .bg-white.p-6.rounded-lg.shadow-sm.border
+    = form_with model: [@project, Comment.new], class: 'space-y-4' do |f|
+      .flex.gap-4
+        = select_tag :user_id, options_from_collection_for_select(User.all, :id, :name), 
+          class: 'w-48 px-4 py-2 border rounded-lg',
+          prompt: 'Select User'
+        = f.text_area :body, class: 'flex-1 px-4 py-2 border rounded-lg', placeholder: 'Write your comment...'
+      = f.submit 'Post Comment', class: 'bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700'
+
+  .bg-white.p-6.rounded-lg.shadow-sm.border
+    = form_with url: project_status_changes_path(@project), class: 'space-y-4' do |f|
+      .flex.gap-4
+        = select_tag :user_id, options_from_collection_for_select(User.all, :id, :name),
+          class: 'w-48 px-4 py-2 border rounded-lg',
+          prompt: 'Select User'
+        = f.select :new_status, options_for_select(Project.statuses.keys.map { |s| [s.humanize, s] }), {},
+          class: 'flex-1 px-4 py-2 border rounded-lg'
+      = f.submit 'Update Status', class: 'bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700'
+
+  .space-y-6
+    h2.text-2xl.font-bold.text-gray-900 Conversation History
+    - @activities.each do |activity|
+      .bg-white.p-6.rounded-lg.shadow-sm.border
+        = render component_for(activity).new(activity: activity)

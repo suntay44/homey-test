@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title Project Conversations
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+  body.bg-gray-50
+    .max-w-7xl.mx-auto.px-4.py-6
+      = yield

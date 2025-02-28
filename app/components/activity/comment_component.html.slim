@@ -1,0 +1,6 @@
+div.space-y-2
+  .flex.items-center.gap-2.text-sm.text-gray-500
+    span.font-medium = @activity.user.name
+    span = "·"
+    time = l(@activity.created_at, format: :long)
+  p.text-gray-800.whitespace-pre-wrap = @activity.body
