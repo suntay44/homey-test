@@ -6,7 +6,7 @@
 # docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name project_conversation_homey project_conversation_homey
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
-FROM debian:bullseye-slim as base
+FROM debian:bullseye-slim AS base
 
 # Install dependencies for building Ruby
 RUN apt-get update && apt-get install -y build-essential wget autoconf
