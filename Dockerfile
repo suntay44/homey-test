@@ -6,9 +6,6 @@
 # docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name project_conversation_homey project_conversation_homey
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
-
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.0
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # Rails app lives here
