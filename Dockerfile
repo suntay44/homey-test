@@ -6,7 +6,22 @@
 # docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name project_conversation_homey project_conversation_homey
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
-FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+FROM debian:bullseye-slim as base
+
+# Install dependencies for building Ruby
+RUN apt-get update && apt-get install -y build-essential wget autoconf
+
+# Install ruby-install for installing Ruby
+RUN wget https://github.com/postmodern/ruby-install/releases/download/v0.9.3/ruby-install-0.9.3.tar.gz \
+  && tar -xzvf ruby-install-0.9.3.tar.gz \
+  && cd ruby-install-0.9.3/ \
+  && make install
+
+# Install Ruby 3.3.0 with the https://github.com/ruby/ruby/pull/9371 patch
+RUN ruby-install -p https://github.com/ruby/ruby/pull/9371.diff ruby 3.3.0
+
+# Make the Ruby binary available on the PATH
+ENV PATH="/opt/rubies/ruby-3.3.0/bin:${PATH}"
 
 # Rails app lives here
 WORKDIR /rails
