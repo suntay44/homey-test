@@ -1,0 +1,9 @@
+.max-w-3xl.mx-auto.p-6
+  h1.text-3xl.font-bold.mb-6 New User
+
+  = form_with model: @user, class: 'space-y-4' do |f|
+    .field
+      = f.label :name, class: 'block text-gray-700 text-sm font-medium mb-2'
+      = f.text_field :name, class: 'w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500'
+
+    = f.submit 'Create User', class: 'bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700'

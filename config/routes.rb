@@ -3,5 +3,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
     resources :status_changes, only: [:create]
   end
-  root to: 'projects#index'
+  resources :users, only: [:new, :create]
+
+  root to: "projects#index"
 end
